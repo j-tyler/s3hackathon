@@ -4,8 +4,7 @@ const AWS = require('aws-sdk');
 const app = electron.app;
 const ipc = require('electron').ipcMain;
 
-ipc.on('invokeAction', function(event, data){
-    // data == name
+ipc.on('addBucketReceive', function(event, data){
     var setData = {
       Bucket: data,
       Key: data
@@ -15,7 +14,7 @@ ipc.on('invokeAction', function(event, data){
 
     console.log("hello i am on server");
 
-    event.sender.send('actionReply', 'created!!');
+    event.sender.send('addBucketSend', 'created!!');
 });
 
 ipc.on('listBuckets', function(event, data) {
