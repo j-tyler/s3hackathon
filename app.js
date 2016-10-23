@@ -4,14 +4,12 @@ var welcomeScreen = document.getElementById("welcomeScreen")
 var installScreen = document.getElementById("installScreen")
 var mainScreen = document.getElementById("mainScreen")
 var installButton = document.getElementById("installButton")
-var createButton = document.getElementById("createButton")
-var destroyButton = document.getElementById("destroyButton")
+var createBucket = document.getElementById("createBucket")
+var destroyBucket = document.getElementById("destroyBucket")
 var createField = document.getElementById("createField")
 var destroyField = document.getElementById("destroyField")
 var addButton = document.getElementById("addButton")
 var removeButton = document.getElementById("removeButton")
-
-var createBucket = document.getElementById("createBucket");
 
 // installButton.addEventListener("click", INSTALLFUNCTION);
 // createButton.addEventListener("click", CREATEBUCKET);
