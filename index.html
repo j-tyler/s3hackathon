@@ -7,28 +7,26 @@
     <link href="index.css" rel="stylesheet">
   </head>
 <body>
-    <div id="wrapper">
-    <div id="welcomeScreen">
-    S3 Test Server
-    <button id="installButton">Install S3</button>
-    </div>
-    <div id="installScreen">
-        Explaination screen
-    </div>
-    <div id="mainScreen">
-    <button id="createBucket">Create Bucket</button>
-        <input type="text" name="postcode" id="createField" placeholder="A1A 1A1" />
-    <button id="destroyBucket">Delete Bucket</button>
-        <input type="text" name="postcode" id="destroyField" placeholder="A1A 1A1" />
 
-        <button id="listBucketButton">List Buckets</button>
+    <header>
+    S3 Server
+    </header>
+    <div id="makeBucket">
+        <input type="text" name="postcode" id="createField"/><button id="createBucket">Create Bucket</button>
+    </div>
+    <table>
+<tr><thead><b>Buckets</b></thead></tr>
+<tbody id="buckets">
+    
+</tbody>
+    </table>
+    <div id="filesAndDropper">
+    <div id="files">
+        
+    </div>
+    <div id="holder">Drag file here</div>
     </div>
 
-    <div id="holder">
-      Drag your file here
-    </div>
-
-    </div>
 </body>
 <script src="app.js"></script>
 </html>

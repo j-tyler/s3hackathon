@@ -46,15 +46,66 @@ holder.ondrop = function(e) {
 }
 
 
+var storage = {
+  'bucket1': ['examplefile', 'example2'],
+  'bucket2': [],
+  'bucket3': ['somefile', 'someotherfile']
+}
 
 
-// var storeBuckets = {};
+// Store for bucket list
+ var storeBuckets = new function() {
+  this.el = document.getElementById('buckets');
+
+  // Aggregate buckets and add them as TD elements in HTML
+  this.fetchAll = function() {
+    var data = '';
+
+    if (Object.keys(storage).length > 0) {
+      for (i = 0; i < Object.keys(storage).length; i++) {
+        data += '<tr>';
+        data += '<td>' + Object.keys(storage)[i];
+        data += '<div id="xbox" onclick="storeBuckets.Delete(' + i + ')>delete</div>' + '</td>';
+        data += '</tr>';
+      }
+    }
+
+    return this.el.innerHTML = data;
+  }
+
+  // Add Buckets
+  this.Add = function() {
+    var bucketName = createField.value;
+
+    if (bucketName) {
+      // Add name
+      storage[bucketName] = [];
+      // Reset value
+      bucketName = '';
+      // Display New List
+      this.fetchAll();
+      }
+    }
+
+    // Delete Buckets
+    this.Delete = function(item) {
+      // Delete the current row
+     storage.splice(item, 1);
+      // Display the new list
+     this.fetchAll();
+    }
+
+  }
+
+storeBuckets.fetchAll();
 
 
-createBucket.addEventListener('click', function(){
-    ipc.once('addBucketReceive', function(response){
-      console.log("what is this")
+
+createBucket.addEventListener('click', function() {
+    ipc.once('addBucketReceive', function(response) {
+      console.log("What is this?")
       console.log(response)
+      storeBuckets.Add();
     })
 
     var name = createField.value;
@@ -66,7 +117,7 @@ createBucket.addEventListener('click', function(){
 
 listBuckets.addEventListener('click', function() {
   ipc.once('listBucketReceive', function(res) {
-    console.log("received list buckets")
+    console.log("Received list buckets")
     console.log(res)
   })
 
@@ -76,13 +127,14 @@ listBuckets.addEventListener('click', function() {
 })
 
 /////ahahahahaha/////
-destroyBucket.addEventListener('click', function(){
+xbox.addEventListener('click', function(){
     ipc.once('destroyBucketReceive', function(response){
-	console.log("oh shit")
-	console.log(response)
+	   console.log("Deletion confirmed")
+	   console.log(response)
+     storeBuckets.Delete();
     })
 
-    var name = destroyField.value;
+    var name = .value;
 
     console.log("Bucket deleted")
 
