@@ -10,6 +10,7 @@ div {
   height: 470px;
   box-shadow: 0px 10px 15px rgba(0,0,0,.8);
   color: white;
+  animation: fade-in2 1.10s ease-in forwards;
 }
 
 #s3logo{
@@ -28,6 +29,7 @@ div {
   width: 95%;
   height: 470px;
   box-shadow: 0px 10px 15px rgba(0,0,0,.8);
+  animation: fade-in2 0.70s ease-in forwards;
 }
 
 #holder {
@@ -92,3 +94,13 @@ div {
 		opacity: .8;
 	}
 }
+
+@keyframes fade-in2 {
+        0% {
+                opacity: 0;
+        }
+        100% {
+                opacity: 1;
+        }
+}
+

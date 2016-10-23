@@ -1,9 +1,10 @@
-var ipc = require('electron').ipcRenderer;
+//var ipc = require('electron').ipcRenderer;
 
 var appWrapper = document.getElementById("appWrapper")
 var flashWrapper = document.getElementById("flashloadWrapper")
 var loadWrapper = document.getElementById("loadWrapper")
 var loadButton = document.getElementById("loadButton")
+var openApp = document.getElementById("openAppButton")
 
 flashWrapper.style.display = "none";
 appWrapper.style.display = "none";
@@ -33,28 +34,28 @@ var listBuckets = document.getElementById("listBucketButton");
 
 //// Drag and Drop ////
 
-const holder = document.getElementById('holder');
+//const holder = document.getElementById('holder');
 
-holder.ondragover = function() {
-  return false;
-}
-holder.ondragleave = function() {
-  return false;
-}
-holder.ondragend = function() {
-  return false;
-}
+//holder.ondragover = function() {
+//  return false;
+//}
+//holder.ondragleave = function() {
+//  return false;
+//}
+//holder.ondragend = function() {
+//  return false;
+//}
 
-holder.ondrop = function(e) {
-  e.preventDefault()
-  for (let f of e.dataTransfer.files) {
-    console.log('File(s) you dragged here: ', f.path);
-    // pickup radio button for bucket
-    uploadFile(f.path);
-  }
-
-  return false;
-}
+//holder.ondrop = function(e) {
+//  e.preventDefault()
+//  for (let f of e.dataTransfer.files) {
+//    console.log('File(s) you dragged here: ', f.path);
+//    // pickup radio button for bucket
+//    uploadFile(f.path);
+//  }
+//
+//  return false;
+//}
 
 
 function uploadFile(path) {
@@ -165,9 +166,9 @@ destroyBucket.addEventListener("mouseleave", function() {
 loadButton.addEventListener('click', function() {
 	flashWrapper.style.display = "initial";
 	loadWrapper.style.display = "none";
+})
 
-	setTimeout(function(){ 
-		flashWrapper.style.display = "none";
-		appWrapper.style.display = "initial"; 
-	}, 15000);
+openApp.addEventListener('click', function() {
+	flashWrapper.style.display = "none";
+	appWrapper.style.display = "initial";
 })
