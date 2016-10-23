@@ -18,6 +18,15 @@ ipc.on('invokeAction', function(event, data){
     event.sender.send('actionReply', 'created!!');
 });
 
+ipc.on('listBuckets', function(event, data) {
+  console.log("listing buckets...");
+
+  var getListBuckets = listBuckets();
+  console.log(getListBuckets)
+
+  event.sender.send('rlistBuckets', getListBuckets);
+})
+
 
 // ipcMain.on('synchronous-message', (event, arg) => {
 //  console.log(arg);
@@ -88,6 +97,20 @@ function createBucket(bInfo) {
   });
 }
 
+function listBuckets() {
+  s3.listBuckets(function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+    } else {
+      console.log("DATA: " + data);
+      for (var i in data) {
+        console.log(i)
+        console.log(data[i])
+      }
+      return data;
+    }
+  })
+}
 
 function deleteBucket(bInfo) {
   // NOTE: Can edit below to take just binfo obj

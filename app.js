@@ -12,6 +12,7 @@ var addButton = document.getElementById("addButton")
 var removeButton = document.getElementById("removeButton")
 
 var createBucket = document.getElementById("createBucket");
+var listBuckets = document.getElementById("listBucketButton");
 
 // installButton.addEventListener("click", INSTALLFUNCTION);
 // createButton.addEventListener("click", CREATEBUCKET);
@@ -20,10 +21,42 @@ var createBucket = document.getElementById("createBucket");
 // removeButton.addEventListener("click", REMOVEFILE);
 
 
+//// Drag and Drop ////
+
+const holder = document.getElementById('holder');
+
+holder.ondragover = function() {
+  return false;
+}
+holder.ondragleave = function() {
+  return false;
+}
+holder.ondragend = function() {
+  return false;
+}
+
+holder.ondrop = function(e) {
+  e.preventDefault()
+  for (let f of e.dataTransfer.files) {
+    console.log('File(s) you dragged here: ', f.path);
+
+  }
+  return false;
+}
+
+////////////////////////
+
+
+// var storeBuckets = {};
+
+
 createBucket.addEventListener('click', function(){
     ipc.once('actionReply', function(response){
+      // storeBuckets[createField.value] = [];
+
       console.log("what is this")
       console.log(response)
+
     })
 
     var name = createField.value;
@@ -32,3 +65,14 @@ createBucket.addEventListener('click', function(){
 
     ipc.send('invokeAction', name);
 });
+
+listBuckets.addEventListener('click', function() {
+  ipc.once('rlistBuckets', function(res) {
+    console.log("received list buckets")
+    console.log(res)
+  })
+
+  console.log("getting list");
+
+  ipc.send('listBuckets', 'hi')
+})
