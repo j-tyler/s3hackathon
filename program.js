@@ -16,13 +16,15 @@ destroyButton.addEventListener("click", DESTROYBUCKET);
   holder.ondragover = () => {
     return false;
   }
+ document.ondragover = document.ondrop = (e) => {
+  e.preventDefault()
+}
   holder.ondragleave = holder.ondragend = () => {
     return false;
   }
   holder.ondrop = (e) => {
     e.preventDefault()
-    for (let f of e.dataTransfer.files) {
-      console.log('File(s) you dragged here: ', f.path)
-    }
+    holder.innerHTML = 'I saw your file';
+    console.log(e.dataTransfer.files[0].path)
     return false;
   }
