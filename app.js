@@ -1,29 +1,22 @@
 var ipc = require('electron').ipcRenderer;
 
-var appWrapper = document.getElementById("appWrapper")
-var flashWrapper = document.getElementById("flashloadWrapper")
-var loadWrapper = document.getElementById("loadWrapper")
-var loadButton = document.getElementById("loadButton")
-var openApp = document.getElementById("openAppButton")
+var appWrapper = document.getElementById("appWrapper");
+var flashWrapper = document.getElementById("flashloadWrapper");
+var loadWrapper = document.getElementById("loadWrapper");
+var loadButton = document.getElementById("loadButton");
+var openApp = document.getElementById("openAppButton");
 
 flashWrapper.style.display = "none";
 appWrapper.style.display = "none";
 
 
-var welcomeScreen = document.getElementById("welcomeScreen")
-var installScreen = document.getElementById("installScreen")
-var mainScreen = document.getElementById("mainScreen")
-var installButton = document.getElementById("installButton")
-var createBucket = document.getElementById("createBucket")
-var destroyBucket = document.getElementById("destroyBucket")
-var createField = document.getElementById("createField")
-var destroyField = document.getElementById("destroyField")
-var addButton = document.getElementById("addButton")
-var removeButton = document.getElementById("removeButton")
-
-
+var welcomeScreen = document.getElementById("welcomeScreen");
+var installScreen = document.getElementById("installScreen");
+var mainScreen = document.getElementById("mainScreen");
 var createBucket = document.getElementById("createBucket");
-var listBuckets = document.getElementById("listBucketButton");
+var createField = document.getElementById("createField");
+
+
 
 // installButton.addEventListener("click", INSTALLFUNCTION);
 //
@@ -58,23 +51,23 @@ var listBuckets = document.getElementById("listBucketButton");
 //}
 
 
-function uploadFile(path) {
-  // get name/key
-  ipc.once('addObjectReceive', function(res) {
-    console.log("i think i uploaded the file")
-    console.log(res)
-  })
+// function uploadFile(path) {
+//   // get name/key
+//   ipc.once('addObjectReceive', function(res) {
+//     console.log("i think i uploaded the file")
+//     console.log(res)
+//   })
+//   console.log(path)
 
-  console.log(path)
-
-  var data = {
-    Bucket: 'cat',
-    Key: 'cat',
-    Body: path
-  }
+//   var data = {
+//     Bucket: 'cat',
+//     Key: 'cat',
+//     Body: path
+//   }
+// }
 
 var storage = {
-  'bucket1': ['examplefile', 'example2'],
+  'bucket2': ['examplefile', 'example2'],
   'bucket2': [],
   'bucket3': ['somefile', 'someotherfile']
 }
@@ -124,7 +117,7 @@ var storage = {
        console.log("Deletion confirmed");
        console.log(response);
        storeBuckets.Delete();
-      })
+      });
 
       var bucket = storage[item];
 
@@ -143,7 +136,7 @@ createBucket.addEventListener('click', function() {
       console.log("What is this?")
       console.log(response)
       storeBuckets.Add();
-    })
+    });
 
     var name = createField.value;
 
@@ -152,16 +145,16 @@ createBucket.addEventListener('click', function() {
     ipc.send('addBucketSend', name);
 });
 
-listBuckets.addEventListener('click', function() {
-  ipc.once('listBucketReceive', function(res) {
-    console.log("Received list buckets")
-    console.log(res)
-  })
+// listBuckets.addEventListener('click', function() {
+//   ipc.once('listBucketReceive', function(res) {
+//     console.log("Received list buckets")
+//     console.log(res)
+//   })
 
-  console.log("getting list");
+//   console.log("getting list");
 
-  ipc.send('listBucketSend', 'hi')
-});
+//   ipc.send('listBucketSend', 'hi');
+// });
 
 
 ////
@@ -175,12 +168,12 @@ createBucket.addEventListener("mouseleave", function() {
 	this.style.color = "black";
 });
 
-destroyBucket.addEventListener("mouseenter", function() {
-        this.style.color = "purple";
-});
-destroyBucket.addEventListener("mouseleave", function() {
-        this.style.color = "black";
-});
+// xbox.addEventListener("mouseenter", function() {
+//         this.style.color = "purple";
+// });
+// xbox.addEventListener("mouseleave", function() {
+//         this.style.color = "black";
+// });
 
 //addButton.addEventListener("mouseenter", function() {
 //        this.style.color = "purple";
@@ -195,10 +188,6 @@ destroyBucket.addEventListener("mouseleave", function() {
 //removeBucket.addEventListener("mouseleave", function() {
 //        this.style.color = "black";
 //});
-
-
-
-
 
 
 
