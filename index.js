@@ -31,7 +31,7 @@ ipc.on('destroyBucketSend', function(event, data) {
 	Bucket: data
     }
 
-    deleteBucket(setData);
+    destroyBucket(setData);
 
     console.log("wow this place is awesome")
 
@@ -122,7 +122,7 @@ function listBuckets() {
   })
 }
 
-function deleteBucket(bInfo) {
+function destroyBucket(bInfo) {
   // NOTE: Can edit below to take just binfo obj
   s3.deleteBucket({Bucket: bInfo['Bucket']}, function(err, data) {
     if (err) {
