@@ -84,7 +84,7 @@ td {
 	animation: fade-in .65s ease-in forwards;
 }
 
-@keyframes scale-in {
+/*@keyframes scale-in {
 	100% {
 		transform: scale(1);
 		opacity: 1;
@@ -121,5 +121,5 @@ td {
         100% {
                 opacity: 1;
         }
-}
+}*/
 

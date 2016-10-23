@@ -1,18 +1,18 @@
 var ipc = require('electron').ipcRenderer;
 
-var appWrapper = document.getElementById("appWrapper");
-var flashWrapper = document.getElementById("flashloadWrapper");
-var loadWrapper = document.getElementById("loadWrapper");
-var loadButton = document.getElementById("loadButton");
-var openApp = document.getElementById("openAppButton");
+// var appWrapper = document.getElementById("appWrapper");
+// var flashWrapper = document.getElementById("flashloadWrapper");
+// var loadWrapper = document.getElementById("loadWrapper");
+// var loadButton = document.getElementById("loadButton");
+// var openApp = document.getElementById("openAppButton");
 
-flashWrapper.style.display = "none";
-appWrapper.style.display = "none";
+// flashWrapper.style.display = "none";
+// appWrapper.style.display = "none";
 
 
-var welcomeScreen = document.getElementById("welcomeScreen");
-var installScreen = document.getElementById("installScreen");
-var mainScreen = document.getElementById("mainScreen");
+// var welcomeScreen = document.getElementById("welcomeScreen");
+// var installScreen = document.getElementById("installScreen");
+// var mainScreen = document.getElementById("mainScreen");
 var createBucket = document.getElementById("createBucket");
 var createField = document.getElementById("createField");
 
@@ -67,33 +67,33 @@ var createField = document.getElementById("createField");
 // }
 
 var storage = {
-  'bucket2': ['examplefile', 'example2'],
-  'bucket2': [],
+  'bucket1': ['examplefile', 'example2'],
+  'bucket2': ['safd'],
   'bucket3': ['somefile', 'someotherfile']
 }
 
 
-// Store for bucket list
- var storeBuckets = new function() {
-  this.el = document.getElementById('buckets');
-
   // Aggregate buckets and add them as TD elements in HTML
-  this.fetchAll = function() {
+  function fetchAll() {
+    var el = document.getElementById('buckets');
+    el.innerHTML = '';
     var data = '';
 
     if (Object.keys(storage).length > 0) {
       for (i = 0; i < Object.keys(storage).length; i++) {
+        data = '';
         data += '<tr>';
         data += '<td>' + Object.keys(storage)[i];
-        data += '<div id="xbox" onclick="storeBuckets.Delete(' + i + ')>delete</div>' + '</td>';
+        data += '<div id="xbox" onclick="Delete(' + i + ')>delete</div>' + '</td>';
         data += '</tr>';
+        el.innerHTML = el.innerHTML + data;
       }
     }
-    return this.el.innerHTML = data;
   }
 
+
   // Add Buckets
-  this.Add = function() {
+  function Add() {
     var bucketName = createField.value;
 
     if (bucketName) {
@@ -102,21 +102,21 @@ var storage = {
       // Reset value
       bucketName = '';
       // Display New List
-      this.fetchAll();
+      fetchAll();
       }
     }
 
     // Delete Buckets
-    this.Delete = function(item) {
+    function Delete(item) {
       // Delete the current row
      storage.splice(item, 1);
       // Display the new list
-     this.fetchAll();
+     fetchAll();
 
      ipc.once('destroyBucketReceive', function(response) {
        console.log("Deletion confirmed");
        console.log(response);
-       storeBuckets.Delete();
+       Delete();
       });
 
       var bucket = storage[item];
@@ -125,17 +125,16 @@ var storage = {
 
       ipc.send('destroyBucketSend', bucket);
     }
-}
   // ipc.send('addObjectSend', data);
 
-storeBuckets.fetchAll();
+fetchAll();
 
 
 createBucket.addEventListener('click', function() {
     ipc.once('addBucketReceive', function(response) {
       console.log("What is this?")
       console.log(response)
-      storeBuckets.Add();
+      Add();
     });
 
     var name = createField.value;
@@ -194,12 +193,12 @@ createBucket.addEventListener("mouseleave", function() {
 
 
 
-loadButton.addEventListener('click', function() {
-	flashWrapper.style.display = "initial";
-	loadWrapper.style.display = "none";
-});
+// loadButton.addEventListener('click', function() {
+// 	flashWrapper.style.display = "initial";
+// 	loadWrapper.style.display = "none";
+// });
 
-openApp.addEventListener('click', function() {
-	flashWrapper.style.display = "none";
-	appWrapper.style.display = "initial";
-});
+// openApp.addEventListener('click', function() {
+// 	flashWrapper.style.display = "none";
+// 	appWrapper.style.display = "initial";
+// });
