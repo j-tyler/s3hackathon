@@ -13,11 +13,11 @@ var removeButton = document.getElementById("removeButton")
 
 var createBucket = document.getElementById("createBucket");
 
-installButton.addEventListener("click", INSTALLFUNCTION);
-createButton.addEventListener("click", CREATEBUCKET);
-destroyButton.addEventListener("click", DESTROYBUCKET);
-addButton.addEventListener("click", ADDFILE);
-removeButton.addEventListener("click", REMOVEFILE);
+// installButton.addEventListener("click", INSTALLFUNCTION);
+// createButton.addEventListener("click", CREATEBUCKET);
+// destroyButton.addEventListener("click", DESTROYBUCKET);
+// addButton.addEventListener("click", ADDFILE);
+// removeButton.addEventListener("click", REMOVEFILE);
 
 
 createBucket.addEventListener('click', function(){
