@@ -1,4 +1,4 @@
-var ipc = require('electron').ipcRenderer;
+//var ipc = require('electron').ipcRenderer;
 
 var welcomeScreen = document.getElementById("welcomeScreen")
 var installScreen = document.getElementById("installScreen")
@@ -12,8 +12,8 @@ var addButton = document.getElementById("addButton")
 var removeButton = document.getElementById("removeButton")
 
 // installButton.addEventListener("click", INSTALLFUNCTION);
-// createButton.addEventListener("click", CREATEBUCKET);
-// destroyButton.addEventListener("click", DESTROYBUCKET);
+//
+// destroyBucket.addEventListener("click", DESTROYBUCKET);
 // addButton.addEventListener("click", ADDFILE);
 // removeButton.addEventListener("click", REMOVEFILE);
 
@@ -30,3 +30,39 @@ createBucket.addEventListener('click', function(){
 
     ipc.send('invokeAction', name);
 });
+
+
+
+
+
+////
+// Mouseenter and Mouseleave activate and remove the information dialog
+////
+
+createBucket.addEventListener("mouseenter", function() {   
+	this.style.color = "purple";
+});
+createBucket.addEventListener("mouseleave", function() {
+	this.style.color = "black";
+});
+
+destroyBucket.addEventListener("mouseenter", function() {
+        this.style.color = "purple";
+});
+destroyBucket.addEventListener("mouseleave", function() {
+        this.style.color = "black";
+});
+
+//addButton.addEventListener("mouseenter", function() {
+//        this.style.color = "purple";
+//});
+//addButton.addEventListener("mouseleave", function() {
+//        this.style.color = "black";
+//});
+//
+//removeBucket.addEventListener("mouseenter", function() {
+//        this.style.color = "purple";
+//});
+//removeBucket.addEventListener("mouseleave", function() {
+//        this.style.color = "black";
+//});
