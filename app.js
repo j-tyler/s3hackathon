@@ -1,5 +1,15 @@
 var ipc = require('electron').ipcRenderer;
 
+var appWrapper = document.getElementById("appWrapper")
+var flashWrapper = document.getElementById("flashloadWrapper")
+var loadWrapper = document.getElementById("loadWrapper")
+var loadButton = document.getElementById("loadButton")
+var openApp = document.getElementById("openAppButton")
+
+flashWrapper.style.display = "none";
+appWrapper.style.display = "none";
+
+
 var welcomeScreen = document.getElementById("welcomeScreen")
 var installScreen = document.getElementById("installScreen")
 var mainScreen = document.getElementById("mainScreen")
@@ -24,27 +34,44 @@ var listBuckets = document.getElementById("listBucketButton");
 
 //// Drag and Drop ////
 
-const holder = document.getElementById('holder');
+//const holder = document.getElementById('holder');
 
-holder.ondragover = function() {
-  return false;
-}
-holder.ondragleave = function() {
-  return false;
-}
-holder.ondragend = function() {
-  return false;
-}
+//holder.ondragover = function() {
+//  return false;
+//}
+//holder.ondragleave = function() {
+//  return false;
+//}
+//holder.ondragend = function() {
+//  return false;
+//}
 
-holder.ondrop = function(e) {
-  e.preventDefault()
-  for (let f of e.dataTransfer.files) {
-    console.log('File(s) you dragged here: ', f.path);
+//holder.ondrop = function(e) {
+//  e.preventDefault()
+//  for (let f of e.dataTransfer.files) {
+//    console.log('File(s) you dragged here: ', f.path);
+//    // pickup radio button for bucket
+//    uploadFile(f.path);
+//  }
+//
+//  return false;
+//}
 
+
+function uploadFile(path) {
+  // get name/key
+  ipc.once('addObjectReceive', function(res) {
+    console.log("i think i uploaded the file")
+    console.log(res)
+  })
+
+  console.log(path)
+
+  var data = {
+    Bucket: 'cat',
+    Key: 'cat',
+    Body: path
   }
-  return false;
-}
-
 
 var storage = {
   'bucket1': ['examplefile', 'example2'],
@@ -93,14 +120,22 @@ var storage = {
       // Display the new list
      this.fetchAll();
 
+     ipc.once('destroyBucketReceive', function(response) {
+       console.log("Deletion confirmed");
+       console.log(response);
+       storeBuckets.Delete();
+      })
 
-     
+      var bucket = storage[item];
+
+      console.log("Bucket deleted");
+
+      ipc.send('destroyBucketSend', bucket);
     }
-
-  }
+}
+  // ipc.send('addObjectSend', data);
 
 storeBuckets.fetchAll();
-
 
 
 createBucket.addEventListener('click', function() {
@@ -126,22 +161,9 @@ listBuckets.addEventListener('click', function() {
   console.log("getting list");
 
   ipc.send('listBucketSend', 'hi')
-})
+});
 
-/////ahahahahaha/////
-xbox.addEventListener('click', function(){
-    ipc.once('destroyBucketReceive', function(response){
-	   console.log("Deletion confirmed")
-	   console.log(response)
-     storeBuckets.Delete();
-    })
 
-    var name = .value;
-
-    console.log("Bucket deleted")
-
-    ipc.send('destroyBucketSend', name)
-})
 ////
 // Mouseenter and Mouseleave activate and remove the information dialog
 ////
@@ -173,3 +195,22 @@ destroyBucket.addEventListener("mouseleave", function() {
 //removeBucket.addEventListener("mouseleave", function() {
 //        this.style.color = "black";
 //});
+
+
+
+
+
+
+
+
+
+
+loadButton.addEventListener('click', function() {
+	flashWrapper.style.display = "initial";
+	loadWrapper.style.display = "none";
+});
+
+openApp.addEventListener('click', function() {
+	flashWrapper.style.display = "none";
+	appWrapper.style.display = "initial";
+});
