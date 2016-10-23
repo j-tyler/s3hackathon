@@ -1,4 +1,4 @@
-//var ipc = require('electron').ipcRenderer;
+var ipc = require('electron').ipcRenderer;
 
 var appWrapper = document.getElementById("appWrapper")
 var flashWrapper = document.getElementById("flashloadWrapper")
@@ -86,7 +86,8 @@ function uploadFile(path) {
 createBucket.addEventListener('click', function(){
     ipc.once('addBucketReceive', function(response){
       console.log("what is this")
-      console.log(response)
+	console.log(response)
+	createField.value = '';
     })
 
     var name = createField.value;
@@ -112,6 +113,7 @@ destroyBucket.addEventListener('click', function(){
     ipc.once('destroyBucketReceive', function(response){
 	console.log("oh shit")
 	console.log(response)
+	destroyField.value = '';
     })
 
     var name = destroyField.value;
