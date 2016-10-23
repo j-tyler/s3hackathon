@@ -65,22 +65,34 @@ createBucket.addEventListener('click', function(){
 });
 
 listBuckets.addEventListener('click', function() {
-  ipc.once('listBucketSend', function(res) {
+  ipc.once('listBucketReceive', function(res) {
     console.log("received list buckets")
     console.log(res)
   })
 
   console.log("getting list");
 
-  ipc.send('listBucketReceive', 'hi')
+  ipc.send('listBucketSend', 'hi')
 })
 
+/////ahahahahaha/////
+deleteBucket.addEventListener('click', function(){
+    ipc.once('deleteBucketReceive', function(response){
+	console.log("oh shit")
+	console.log(response)
+    })
 
+    var name = destroyField.value;
+
+    console.log("Bucket deleted")
+
+    ipc.send('deleteBucketSend', name)
+})
 ////
 // Mouseenter and Mouseleave activate and remove the information dialog
 ////
 
-createBucket.addEventListener("mouseenter", function() {   
+createBucket.addEventListener("mouseenter", function() {
 	this.style.color = "purple";
 });
 createBucket.addEventListener("mouseleave", function() {
