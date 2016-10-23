@@ -1,5 +1,14 @@
 var ipc = require('electron').ipcRenderer;
 
+var appWrapper = document.getElementById("appWrapper")
+var flashWrapper = document.getElementById("flashloadWrapper")
+var loadWrapper = document.getElementById("loadWrapper")
+var loadButton = document.getElementById("loadButton")
+
+flashWrapper.style.display = "none";
+appWrapper.style.display = "none";
+
+
 var welcomeScreen = document.getElementById("welcomeScreen")
 var installScreen = document.getElementById("installScreen")
 var mainScreen = document.getElementById("mainScreen")
@@ -143,3 +152,22 @@ destroyBucket.addEventListener("mouseleave", function() {
 //removeBucket.addEventListener("mouseleave", function() {
 //        this.style.color = "black";
 //});
+
+
+
+
+
+
+
+
+
+
+loadButton.addEventListener('click', function() {
+	flashWrapper.style.display = "initial";
+	loadWrapper.style.display = "none";
+
+	setTimeout(function(){ 
+		flashWrapper.style.display = "none";
+		appWrapper.style.display = "initial"; 
+	}, 15000);
+})
