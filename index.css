@@ -30,15 +30,26 @@ td {
   box-shadow: 0px 10px 15px rgba(0,0,0,.8);
   color: white;
   animation: fade-in2 1.10s ease-in forwards;
+  text-align: center;
 }
 
 #s3logo{
     display: flex;
     align-items: center;
-    justify-content: center 
+    justify-content: center;
 }
 
 .s3Title{
+    text-align: center;
+    font-size: 30px;
+}
+
+#explain{
+    font-size: 20px;
+    text-align: center;
+}
+
+#openAppButton{
     text-align: center;
     font-size: 20px;
 }
@@ -52,9 +63,14 @@ td {
 }
 
 #holder {
+  background-image: url("http://img.wallpaperfolder.com/f/47C2D3BF7FFE/awesome-cats-space-caveman-circus.jpg");
+  background-size: 500px, auto;
   background-color: #fff;
-  width:  300px;
-  height: 300px;  
+  width:  500px;
+  height: 312px;
+  color: white;
+  text-align: center;
+  font-size: 20px;
 }
 
 #infoRect {
@@ -122,4 +138,3 @@ td {
                 opacity: 1;
         }
 }
-
