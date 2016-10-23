@@ -17,13 +17,13 @@ ipc.on('addBucketReceive', function(event, data){
     event.sender.send('addBucketSend', 'created!!');
 });
 
-ipc.on('listBuckets', function(event, data) {
+ipc.on('listBucketReceive', function(event, data) {
   console.log("listing buckets...");
 
   var getListBuckets = listBuckets();
   console.log(getListBuckets)
 
-  event.sender.send('rlistBuckets', getListBuckets);
+  event.sender.send('listBucketSend', getListBuckets);
 })
 
 

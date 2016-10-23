@@ -65,12 +65,12 @@ createBucket.addEventListener('click', function(){
 });
 
 listBuckets.addEventListener('click', function() {
-  ipc.once('rlistBuckets', function(res) {
+  ipc.once('listBucketSend', function(res) {
     console.log("received list buckets")
     console.log(res)
   })
 
   console.log("getting list");
 
-  ipc.send('listBuckets', 'hi')
+  ipc.send('listBucketReceive', 'hi')
 })
