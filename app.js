@@ -1,5 +1,8 @@
 var ipc = require('electron').ipcRenderer;
 
+var storage = {}
+
+
 var appWrapper = document.getElementById("appWrapper")
 var flashWrapper = document.getElementById("flashloadWrapper")
 var loadWrapper = document.getElementById("loadWrapper")
@@ -72,13 +75,10 @@ function uploadFile(path) {
     Key: 'cat',
     Body: path
   }
+
+  ipc.send('addObjectSend', data);
 }
 
-var storage = {
-  'bucket1': ['examplefile', 'example2'],
-  'bucket2': [],
-  'bucket3': ['somefile', 'someotherfile']
-}
 
 
 /*  Delete Object stuffs
@@ -101,70 +101,128 @@ var params = {
   }
 */
 
+// function storeBuckets() {
+//   var el = document.getElementById('buckets');
+// }
 
-// Store for bucket list
- var storeBuckets = new function() {
-  this.el = document.getElementById('buckets');
+function fetchAll() {
+  var el = document.getElementById('buckets');
+  el.innerHTML = '';
+  var data = '';
 
-  // Aggregate buckets and add them as TD elements in HTML
-  this.fetchAll = function() {
-    var data = '';
-
-    if (Object.keys(storage).length > 0) {
-      for (i = 0; i < Object.keys(storage).length; i++) {
-        data += '<tr>';
+  if (Object.keys(storage).length > 0) {
+    for (var i = 0; i < Object.keys(storage).length; i++) {
+      data = '';
+      data += '<tr>';
         data += '<td>' + Object.keys(storage)[i];
-        data += '<div id="xbox" onclick="storeBuckets.Delete(' + i + ')>delete</div>' + '</td>';
+        data += '<div id="xbox" onclick="Delete(' + i + ')>delete</div>' + '</td>';
         data += '</tr>';
-      }
+        el.innerHTML = el.innerHTML + data;
     }
-    return this.el.innerHTML = data;
   }
-
-  // Add Buckets
-  this.Add = function() {
-    var bucketName = createField.value;
-
-    if (bucketName) {
-      // Add name
-      storage[bucketName] = [];
-      // Reset value
-      bucketName = '';
-      // Display New List
-      this.fetchAll();
-      }
-    }
-
-    // Delete Buckets
-    this.Delete = function(item) {
-      // Delete the current row
-     storage.splice(item, 1);
-      // Display the new list
-     this.fetchAll();
-
-     ipc.once('destroyBucketReceive', function(response) {
-       console.log("Deletion confirmed");
-       console.log(response);
-       storeBuckets.Delete();
-      })
-
-      var bucket = storage[item];
-
-      console.log("Bucket deleted");
-
-      ipc.send('destroyBucketSend', bucket);
-    }
 }
+
+function Add() {
+  var bucketName = createField.value;
+
+  if (bucketName) {
+    // Add name
+    storage[bucketName] = [];
+    // Reset value
+    bucketName = '';
+    // Display New List
+    this.fetchAll();
+  }
+}
+
+// var storage = {
+//   'bucket1': ['examplefile', 'example2'],
+//   'bucket2': [],
+//   'bucket3': ['somefile', 'someotherfile']
+// }
+
+function Delete(item) {
+
+  ipc.once('destroyBucketReceive', function(response) {
+    console.log("Deletion confirmed");
+    console.log(response);
+    // storeBuckets.Delete();
+    delete storage[item]
+    fetchAll();
+  })
+
+  var bucket = storage[item];
+
+  console.log("Bucket deleted");
+
+  ipc.send('destroyBucketSend', bucket);
+}
+
+
+
+// // Store for bucket list
+//  var storeBuckets = new function() {
+//   this.el = document.getElementById('buckets');
+
+//   // Aggregate buckets and add them as TD elements in HTML
+//   this.fetchAll = function() {
+//     var data = '';
+
+//     if (Object.keys(storage).length > 0) {
+//       for (var i = 0; i < Object.keys(storage).length; i++) {
+//         data += '<tr>';
+//         data += '<td>' + Object.keys(storage)[i];
+//         data += '<div id="xbox" onclick="storeBuckets.Delete(' + i + ')>delete</div>' + '</td>';
+//         data += '</tr>';
+//       }
+//     }
+//     return this.el.innerHTML = data;
+//   }
+
+//   // Add Buckets
+//   this.Add = function() {
+//     var bucketName = createField.value;
+
+//     if (bucketName) {
+//       // Add name
+//       storage[bucketName] = [];
+//       // Reset value
+//       bucketName = '';
+//       // Display New List
+//       this.fetchAll();
+//       }
+//     }
+
+//     // Delete Buckets
+//     this.Delete = function(item) {
+//       // Delete the current row
+//      storage.splice(item, 1);
+//       // Display the new list
+//      this.fetchAll();
+
+//      ipc.once('destroyBucketReceive', function(response) {
+//        console.log("Deletion confirmed");
+//        console.log(response);
+//        storeBuckets.Delete();
+//       })
+
+//       var bucket = storage[item];
+
+//       console.log("Bucket deleted");
+
+//       ipc.send('destroyBucketSend', bucket);
+//     }
+// }
   // ipc.send('addObjectSend', data);
 
-storeBuckets.fetchAll();
+// storeBuckets.fetchAll();
 
 
 createBucket.addEventListener('click', function() {
     ipc.once('addBucketReceive', function(response) {
       console.log("What is this?")
       console.log(response)
-      storeBuckets.Add();
+      Add();
     })
 
     var name = createField.value;
