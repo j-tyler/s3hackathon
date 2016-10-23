@@ -4,8 +4,8 @@
       Electron Test document
     </title>
     <meta charset="UTF-8">
-    <link href="cssfile.css" rel="stylesheet">
-</head>
+    <link href="index.css" rel="stylesheet">
+  </head>
 <body>
     <div id="wrapper">
     <div id="welcomeScreen">
@@ -18,15 +18,17 @@
     <div id="mainScreen">
     <button id="createBucket">Create Bucket</button>
         <input type="text" name="postcode" id="createField" placeholder="A1A 1A1" />
-    <button id="deleteButton">Delete Bucket</button>
+    <button id="destroyBucket">Delete Bucket</button>
         <input type="text" name="postcode" id="destroyField" placeholder="A1A 1A1" />
+
+        <button id="listBucketButton">List Buckets</button>
     </div>
-  
+
     <div id="holder">
-        Drag your file here
+      Drag your file here
     </div>
-  
+
     </div>
-    <script src="program.js"></script>
 </body>
+<script src="app.js"></script>
 </html>
