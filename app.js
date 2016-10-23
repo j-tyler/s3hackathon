@@ -72,9 +72,14 @@ function uploadFile(path) {
     Key: 'cat',
     Body: path
   }
-
-  ipc.send('addObjectSend', data);
 }
+
+var storage = {
+  'bucket1': ['examplefile', 'example2'],
+  'bucket2': [],
+  'bucket3': ['somefile', 'someotherfile']
+}
+
 
 /*  Delete Object stuffs
 
@@ -97,17 +102,69 @@ var params = {
 */
 
 
-// var storeBuckets = {
-//   'ace': ['a', 'b', 'c'],
-//   'bay': ['d', 'e']
-// };
+// Store for bucket list
+ var storeBuckets = new function() {
+  this.el = document.getElementById('buckets');
+
+  // Aggregate buckets and add them as TD elements in HTML
+  this.fetchAll = function() {
+    var data = '';
+
+    if (Object.keys(storage).length > 0) {
+      for (i = 0; i < Object.keys(storage).length; i++) {
+        data += '<tr>';
+        data += '<td>' + Object.keys(storage)[i];
+        data += '<div id="xbox" onclick="storeBuckets.Delete(' + i + ')>delete</div>' + '</td>';
+        data += '</tr>';
+      }
+    }
+    return this.el.innerHTML = data;
+  }
+
+  // Add Buckets
+  this.Add = function() {
+    var bucketName = createField.value;
+
+    if (bucketName) {
+      // Add name
+      storage[bucketName] = [];
+      // Reset value
+      bucketName = '';
+      // Display New List
+      this.fetchAll();
+      }
+    }
+
+    // Delete Buckets
+    this.Delete = function(item) {
+      // Delete the current row
+     storage.splice(item, 1);
+      // Display the new list
+     this.fetchAll();
+
+     ipc.once('destroyBucketReceive', function(response) {
+       console.log("Deletion confirmed");
+       console.log(response);
+       storeBuckets.Delete();
+      })
+
+      var bucket = storage[item];
+
+      console.log("Bucket deleted");
+
+      ipc.send('destroyBucketSend', bucket);
+    }
+}
+  // ipc.send('addObjectSend', data);
+
+storeBuckets.fetchAll();
 
 
-createBucket.addEventListener('click', function(){
-    ipc.once('addBucketReceive', function(response){
-      console.log("what is this")
-	console.log(response)
-	createField.value = '';
+createBucket.addEventListener('click', function() {
+    ipc.once('addBucketReceive', function(response) {
+      console.log("What is this?")
+      console.log(response)
+      storeBuckets.Add();
     })
 
     var name = createField.value;
@@ -117,31 +174,31 @@ createBucket.addEventListener('click', function(){
     ipc.send('addBucketSend', name);
 });
 
-listBuckets.addEventListener('click', function() {
-  ipc.once('listBucketReceive', function(res) {
-    console.log("received list buckets")
-    console.log(res)
-  })
+// listBuckets.addEventListener('click', function() {
+//   ipc.once('listBucketReceive', function(res) {
+//     console.log("Received list buckets")
+//     console.log(res)
+//   })
 
-  console.log("getting list");
+//   console.log("getting list");
 
-  ipc.send('listBucketSend', 'hi')
-})
+//   ipc.send('listBucketSend', 'hi')
+// })
 
 /////ahahahahaha/////
-destroyBucket.addEventListener('click', function(){
-    ipc.once('destroyBucketReceive', function(response){
-    	console.log("oh shit")
-    	console.log(response)
-    	destroyField.value = '';
-    })
+// destroyBucket.addEventListener('click', function(){
+//     ipc.once('destroyBucketReceive', function(response){
+//     	console.log("oh shit")
+//     	console.log(response)
+//     	destroyField.value = '';
+//     })
 
-    var name = destroyField.value;
+//     var name = destroyField.value;
 
-    console.log("Bucket deleted")
+//     console.log("Bucket deleted")
 
-    ipc.send('destroyBucketSend', name)
-})
+//     ipc.send('destroyBucketSend', name)
+// });
 
 
 ////
@@ -155,12 +212,12 @@ createBucket.addEventListener("mouseleave", function() {
 	this.style.color = "black";
 });
 
-destroyBucket.addEventListener("mouseenter", function() {
-        this.style.color = "purple";
-});
-destroyBucket.addEventListener("mouseleave", function() {
-        this.style.color = "black";
-});
+// destroyBucket.addEventListener("mouseenter", function() {
+//         this.style.color = "purple";
+// });
+// destroyBucket.addEventListener("mouseleave", function() {
+//         this.style.color = "black";
+// });
 
 //addButton.addEventListener("mouseenter", function() {
 //        this.style.color = "purple";
@@ -188,9 +245,9 @@ destroyBucket.addEventListener("mouseleave", function() {
 loadButton.addEventListener('click', function() {
 	flashWrapper.style.display = "initial";
 	loadWrapper.style.display = "none";
-})
+});
 
 openApp.addEventListener('click', function() {
 	flashWrapper.style.display = "none";
 	appWrapper.style.display = "initial";
-})
+});
