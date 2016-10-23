@@ -113,11 +113,15 @@ function fetchAll() {
   if (Object.keys(storage).length > 0) {
     for (var i = 0; i < Object.keys(storage).length; i++) {
       data = '';
-      data += '<tr>';
-        data += '<td>' + Object.keys(storage)[i];
-        data += '<div id="xbox" onclick="Delete(' + i + ')>delete</div>' + '</td>';
-        data += '</tr>';
-        el.innerHTML = el.innerHTML + data;
+      data += '<div class="help">'
+      data += Object.keys(storage)[i]
+      data += '<div id="xbox">'
+      data += '<span onclick="Delete(' + i + '"> X </span>'
+      data += '</div>'
+      data += '</div>'
+
+
+      el.innerHTML = el.innerHTML + data;
     }
   }
 }
@@ -129,7 +133,7 @@ function Add() {
     // Add name
     storage[bucketName] = [];
     // Reset value
-    bucketName = '';
+    createField.value = '';
     // Display New List
     this.fetchAll();
   }
