@@ -19,7 +19,7 @@ var removeButton = document.getElementById("removeButton")
 
 
 createBucket.addEventListener('click', function(){
-    ipc.once('actionReply', function(response){
+    ipc.once('addBucketReceive', function(response){
       console.log("what is this")
       console.log(response)
     })
@@ -28,5 +28,5 @@ createBucket.addEventListener('click', function(){
 
     console.log(name);
 
-    ipc.send('invokeAction', name);
+    ipc.send('addBucketSend', name);
 });
