@@ -1,7 +1,26 @@
+body {
+	font: Arial;
+}
+
 div {
   display: block;
   margin: auto;
   color: #333;
+}
+
+td {
+	border: 2px solid black;
+	padding: 10px 12px 10px 12px;
+	font-size: 1.2em;
+}
+
+#xbox {
+	background-color: #ff5050;
+	padding: 3px;
+	margin-left: 10px;
+	border-radius: 5px;
+	display: inline-block;
+	font-size: 0.6em;
 }
 
 #flashWrapper{
