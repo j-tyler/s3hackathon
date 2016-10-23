@@ -69,7 +69,6 @@ var storage = {
         data += '</tr>';
       }
     }
-
     return this.el.innerHTML = data;
   }
 
@@ -93,6 +92,9 @@ var storage = {
      storage.splice(item, 1);
       // Display the new list
      this.fetchAll();
+
+
+     
     }
 
   }
