@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 const app = electron.app;
 const ipc = require('electron').ipcMain;
 
-ipc.on('addBucketReceive', function(event, data){
+ipc.on('addBucketSend', function(event, data){
     var setData = {
       Bucket: data,
       Key: data
@@ -14,19 +14,19 @@ ipc.on('addBucketReceive', function(event, data){
 
     console.log("hello i am on server");
 
-    event.sender.send('addBucketSend', 'created!!');
+    event.sender.send('addBucketReceive', 'created!!');
 });
 
-ipc.on('listBucketReceive', function(event, data) {
+ipc.on('listBucketSend', function(event, data) {
   console.log("listing buckets...");
 
   var getListBuckets = listBuckets();
   console.log(getListBuckets)
 
-  event.sender.send('listBucketSend', getListBuckets);
+  event.sender.send('listBucketReceive', getListBuckets);
 })
 
-ipc.on('destroyBucketReceive', function(event, data) {
+ipc.on('destroyBucketSend', function(event, data) {
     var setData = {
 	Bucket: data
     }
@@ -35,7 +35,7 @@ ipc.on('destroyBucketReceive', function(event, data) {
 
     console.log("wow this place is awesome")
 
-    event.sender.send('destroyBucketSend', 'rekt');
+    event.sender.send('destroyBucketReceive', 'rekt');
 });
 
 // ipcMain.on('synchronous-message', (event, arg) => {
