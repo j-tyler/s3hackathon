@@ -3,6 +3,7 @@ const electron = require('electron');
 const AWS = require('aws-sdk');
 const app = electron.app;
 const ipc = require('electron').ipcMain;
+const fs = require('fs');
 
 ipc.on('addBucketSend', function(event, data){
     var setData = {
@@ -37,6 +38,13 @@ ipc.on('destroyBucketSend', function(event, data) {
 
     event.sender.send('destroyBucketReceive', 'rekt');
 });
+
+ipc.on('addObjectSend', function(event, data) {
+  console.log("adding object...");
+
+  addObject(data);
+  event.sender.send('addObjectReceive', 'object yo')
+})
 
 // ipcMain.on('synchronous-message', (event, arg) => {
 //  console.log(arg);
@@ -136,6 +144,27 @@ function destroyBucket(bInfo) {
   })
 }
 
+function addObject(oInfo) {
+  var file = fs.createReadStream(oInfo['Body']);
+  var params = {
+    Bucket: oInfo['Bucket'],
+    Key: oInfo['Key'],
+    Body: file
+  }
+
+  console.log(params)
+
+  s3.putObject(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+    } else {
+      console.log(data);
+      console.log("Object success")
+    }
+  });
+}
+
+
 
 ///////////////////////
 
@@ -188,20 +217,20 @@ app.on('ready', () => {
 
 
 /*
-putObject(params = {}, callback)  // add an object to bucket
 putBucketNotificationConfiguration(params = {}, callback)  // enables notifications of specified events for a bucket
 listObjectsV2(params = {}, callback) // return some or all (up to 1000) of the objects in a bucket. You can use request params as selection criteria to return a subset of the objects in a bucket.
-listObjects(params = {}, callback)  // return (up to 1000) objects in a bucket. Use request params as selection criteria to return subset of the objects in a bucket
-listBuckets(params = {}, callback)  // returns list of all buckets owned by the authenticated sender of the request
 headObject(params = {}, callback) // HEAD operation retrieves metadata from an object without returning the object itself.
 getObject(params = {}, callback) // Retrieve objects from S3
-deleteObjects(params = {}, callback) // enables you to delete multiple objects from a bucket. You may specify up to 1000 keys
 deleteBucket(params = {}, callback) // deletes bucket. All objects in bucket must be deleted before bucket itself can be deleted
 
+deleteObjects(params = {}, callback) // enables you to delete multiple objects from a bucket. You may specify up to 1000 keys
+listObjects(params = {}, callback)  // return (up to 1000) objects in a bucket. Use request params as selection criteria to return subset of the objects in a bucket
+putObject(params = {}, callback)  // add an object to bucket
 
 
 ////////
 createBucket(params, callback) //create new bucket
+listBuckets(params = {}, callback)  // returns list of all buckets owned by the authenticated sender of the request
 
 
 

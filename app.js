@@ -40,15 +40,37 @@ holder.ondrop = function(e) {
   e.preventDefault()
   for (let f of e.dataTransfer.files) {
     console.log('File(s) you dragged here: ', f.path);
-
+    // pickup radio button for bucket
+    uploadFile(f.path);
   }
+
   return false;
 }
 
 
+function uploadFile(path) {
+  // get name/key
+  ipc.once('addObjectReceive', function(res) {
+    console.log("i think i uploaded the file")
+    console.log(res)
+  })
+
+  console.log(path)
+
+  var data = {
+    Bucket: 'cat',
+    Key: 'cat',
+    Body: path
+  }
+
+  ipc.send('addObjectSend', data);
+}
 
 
-// var storeBuckets = {};
+// var storeBuckets = {
+//   'ace': ['a', 'b', 'c'],
+//   'bay': ['d', 'e']
+// };
 
 
 createBucket.addEventListener('click', function(){
@@ -88,6 +110,8 @@ destroyBucket.addEventListener('click', function(){
 
     ipc.send('destroyBucketSend', name)
 })
+
+
 ////
 // Mouseenter and Mouseleave activate and remove the information dialog
 ////
