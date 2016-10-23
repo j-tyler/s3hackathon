@@ -26,7 +26,7 @@ ipc.on('listBucketReceive', function(event, data) {
   event.sender.send('listBucketSend', getListBuckets);
 })
 
-ipc.on('deleteBucketReceive', function(event, data) {
+ipc.on('destroyBucketReceive', function(event, data) {
     var setData = {
 	Bucket: data
     }
@@ -35,7 +35,7 @@ ipc.on('deleteBucketReceive', function(event, data) {
 
     console.log("wow this place is awesome")
 
-    event.sender.send('deleteBucketSend', 'rekt');
+    event.sender.send('destroyBucketSend', 'rekt');
 });
 
 // ipcMain.on('synchronous-message', (event, arg) => {

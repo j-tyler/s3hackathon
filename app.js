@@ -76,8 +76,8 @@ listBuckets.addEventListener('click', function() {
 })
 
 /////ahahahahaha/////
-deleteBucket.addEventListener('click', function(){
-    ipc.once('deleteBucketReceive', function(response){
+destroyBucket.addEventListener('click', function(){
+    ipc.once('destroyBucketReceive', function(response){
 	console.log("oh shit")
 	console.log(response)
     })
@@ -86,7 +86,7 @@ deleteBucket.addEventListener('click', function(){
 
     console.log("Bucket deleted")
 
-    ipc.send('deleteBucketSend', name)
+    ipc.send('destroyBucketSend', name)
 })
 ////
 // Mouseenter and Mouseleave activate and remove the information dialog
