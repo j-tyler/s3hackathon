@@ -162,8 +162,27 @@ function addObject(oInfo) {
       console.log("Object success")
     }
   });
+};
+
+function destroyObject(oInfo) {
+  var params = {
+      Bucket: oInfo['Bucket'],
+      Delete: {
+	  Objects: [
+	    {
+		Key: oInfo['key']
+	    },
+	],
+    }
 }
 
+console.log(params);
+s3.deleteObjects(params, function(err, data) {
+    if (err)
+	console.log(err, err.stack);
+    else
+	console.log(data);
+});
 
 
 ///////////////////////
