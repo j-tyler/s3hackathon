@@ -46,6 +46,15 @@ ipc.on('addObjectSend', function(event, data) {
   event.sender.send('addObjectReceive', 'object yo')
 })
 
+// ipc.on('destroyObjectSend', function(event, data) {
+//   console.log("deleting object...");
+
+//   destroyObject(data);
+//   event.sender.send('destroyObjectReceive', 'deleted.')
+// })
+
+
+
 // ipcMain.on('synchronous-message', (event, arg) => {
 //  console.log(arg);
 //  event.returnValue = 'pong';

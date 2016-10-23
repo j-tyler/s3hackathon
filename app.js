@@ -34,28 +34,28 @@ var listBuckets = document.getElementById("listBucketButton");
 
 //// Drag and Drop ////
 
-//const holder = document.getElementById('holder');
+const holder = document.getElementById('holder');
 
-//holder.ondragover = function() {
-//  return false;
-//}
-//holder.ondragleave = function() {
-//  return false;
-//}
-//holder.ondragend = function() {
-//  return false;
-//}
+holder.ondragover = function() {
+ return false;
+}
+holder.ondragleave = function() {
+ return false;
+}
+holder.ondragend = function() {
+ return false;
+}
 
-//holder.ondrop = function(e) {
-//  e.preventDefault()
-//  for (let f of e.dataTransfer.files) {
-//    console.log('File(s) you dragged here: ', f.path);
-//    // pickup radio button for bucket
-//    uploadFile(f.path);
-//  }
-//
-//  return false;
-//}
+holder.ondrop = function(e) {
+ e.preventDefault()
+ for (let f of e.dataTransfer.files) {
+   console.log('File(s) you dragged here: ', f.path);
+   // pickup radio button for bucket
+   uploadFile(f.path);
+ }
+
+ return false;
+}
 
 
 function uploadFile(path) {
@@ -75,6 +75,26 @@ function uploadFile(path) {
 
   ipc.send('addObjectSend', data);
 }
+
+/*  Delete Object stuffs
+
+deleteObject.addEventListener('click', function() {
+  ipc.once
+})
+
+
+
+var params = {
+    Bucket: oInfo['Bucket'],
+    Delete: {
+      Objects: [
+        {
+          Key: oInfo['key']
+        }
+      ]
+    }
+  }
+*/
 
 
 // var storeBuckets = {
@@ -111,9 +131,9 @@ listBuckets.addEventListener('click', function() {
 /////ahahahahaha/////
 destroyBucket.addEventListener('click', function(){
     ipc.once('destroyBucketReceive', function(response){
-	console.log("oh shit")
-	console.log(response)
-	destroyField.value = '';
+    	console.log("oh shit")
+    	console.log(response)
+    	destroyField.value = '';
     })
 
     var name = destroyField.value;
