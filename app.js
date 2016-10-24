@@ -120,7 +120,6 @@ function fetchAll() {
       data += '</div>'
       data += '</div>'
 
-
       el.innerHTML = el.innerHTML + data;
     }
   }
