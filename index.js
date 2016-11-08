@@ -9,7 +9,7 @@ ipc.on('addBucketSend', function(event, data){
     var setData = {
       Bucket: data,
       Key: data
-    }
+    };
 
     createBucket(setData);
 
@@ -28,9 +28,9 @@ ipc.on('listBucketSend', function(event, data) {
 })
 
 ipc.on('destroyBucketSend', function(event, data) {
-    var setData = {
-	Bucket: data
-    }
+  var setData = {
+    Bucket: data
+  };
 
     destroyBucket(setData);
 
@@ -136,7 +136,7 @@ function listBuckets() {
       }
       return data;
     }
-  })
+  });
 }
 
 function destroyBucket(bInfo) {
@@ -150,7 +150,7 @@ function destroyBucket(bInfo) {
       console.log("Success!?");
       // send back to DOM
     }
-  })
+  });
 }
 
 function addObject(oInfo) {
