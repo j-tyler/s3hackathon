@@ -1,28 +1,28 @@
 var ipc = require('electron').ipcRenderer;
 
-var storage = {}
+var storage = {};
 
 
-var appWrapper = document.getElementById("appWrapper")
-var flashWrapper = document.getElementById("flashloadWrapper")
-var loadWrapper = document.getElementById("loadWrapper")
-var loadButton = document.getElementById("loadButton")
-var openApp = document.getElementById("openAppButton")
+var appWrapper = document.getElementById("appWrapper");
+var flashWrapper = document.getElementById("flashloadWrapper");
+var loadWrapper = document.getElementById("loadWrapper");
+var loadButton = document.getElementById("loadButton");
+var openApp = document.getElementById("openAppButton");
 
 flashWrapper.style.display = "none";
 appWrapper.style.display = "none";
 
 
-var welcomeScreen = document.getElementById("welcomeScreen")
-var installScreen = document.getElementById("installScreen")
-var mainScreen = document.getElementById("mainScreen")
-var installButton = document.getElementById("installButton")
-var createBucket = document.getElementById("createBucket")
-var destroyBucket = document.getElementById("destroyBucket")
-var createField = document.getElementById("createField")
-var destroyField = document.getElementById("destroyField")
-var addButton = document.getElementById("addButton")
-var removeButton = document.getElementById("removeButton")
+var welcomeScreen = document.getElementById("welcomeScreen");
+var installScreen = document.getElementById("installScreen");
+var mainScreen = document.getElementById("mainScreen");
+var installButton = document.getElementById("installButton");
+var createBucket = document.getElementById("createBucket");
+var destroyBucket = document.getElementById("destroyBucket");
+var createField = document.getElementById("createField");
+var destroyField = document.getElementById("destroyField");
+var addButton = document.getElementById("addButton");
+var removeButton = document.getElementById("removeButton");
 
 
 var createBucket = document.getElementById("createBucket");
@@ -41,16 +41,16 @@ const holder = document.getElementById('holder');
 
 holder.ondragover = function() {
  return false;
-}
+};
 holder.ondragleave = function() {
  return false;
-}
+};
 holder.ondragend = function() {
  return false;
-}
+};
 
 holder.ondrop = function(e) {
- e.preventDefault()
+ e.preventDefault();
  for (let f of e.dataTransfer.files) {
    console.log('File(s) you dragged here: ', f.path);
    // pickup radio button for bucket
@@ -58,23 +58,23 @@ holder.ondrop = function(e) {
  }
 
  return false;
-}
+};
 
 
 function uploadFile(path) {
   // get name/key
   ipc.once('addObjectReceive', function(res) {
-    console.log("i think i uploaded the file")
-    console.log(res)
-  })
+    console.log("i think i uploaded the file");
+    console.log(res);
+  });
 
-  console.log(path)
+  console.log(path);
 
   var data = {
     Bucket: 'cat',
     Key: 'cat',
     Body: path
-  }
+  };
 
   ipc.send('addObjectSend', data);
 }
@@ -113,12 +113,12 @@ function fetchAll() {
   if (Object.keys(storage).length > 0) {
     for (var i = 0; i < Object.keys(storage).length; i++) {
       data = '';
-      data += '<div class="help">'
-      data += Object.keys(storage)[i]
-      data += '<div id="xbox">'
-      data += '<span onclick="Delete(' + i + '"> X </span>'
-      data += '</div>'
-      data += '</div>'
+      data += '<div class="help">';
+      data += Object.keys(storage)[i];
+      data += '<div id="xbox">';
+      data += '<span onclick="Delete(' + i + '"> X </span>';
+      data += '</div>';
+      data += '</div>';
 
       el.innerHTML = el.innerHTML + data;
     }
@@ -150,9 +150,9 @@ function Delete(item) {
     console.log("Deletion confirmed");
     console.log(response);
     // storeBuckets.Delete();
-    delete storage[item]
+    delete storage[item];
     fetchAll();
-  })
+  });
 
   var bucket = storage[item];
 
@@ -235,16 +235,16 @@ createBucket.addEventListener('click', function() {
     ipc.send('addBucketSend', name);
 });
 
-// listBuckets.addEventListener('click', function() {
-//   ipc.once('listBucketReceive', function(res) {
-//     console.log("Received list buckets")
-//     console.log(res)
-//   })
+listBuckets.addEventListener('click', function() {
+  ipc.once('listBucketReceive', function(res) {
+    console.log("Received list buckets")
+    console.log(res)
+  })
 
-//   console.log("getting list");
+  console.log("getting list");
 
-//   ipc.send('listBucketSend', 'hi')
-// })
+  ipc.send('listBucketSend', 'hi')
+})
 
 /////ahahahahaha/////
 // destroyBucket.addEventListener('click', function(){
