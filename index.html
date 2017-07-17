@@ -1,31 +1,45 @@
 <html lang="en">
-  <head>
+<head>
     <title>
       Electron Test document
     </title>
     <meta charset="UTF-8">
-    <link href="cssfile.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
   </head>
 <body>
-<div id="wrapper">
-  <div id="welcomeScreen">
-   S3 Test Server
-    <button id="installButton">Install S3</button>
-  </div>
-  <div id="installScreen">
-    Explaination screen
-  </div>
-  <div id="mainScreen">
-    <button id="createBucket">Create Bucket</button>
-    <input type="text" name="postcode" id="createField" placeholder="A1A 1A1" />
-    <button id="deleteButton">Delete Bucket</button>
-    <input type="text" name="postcode" id="destroyField" placeholder="A1A 1A1" />
-  </div>
-  
-  <div id="holder">
-  Drag your file here
-  </div>
-  
-</div>
-<script src="program.js"></script>
+    <div id="loadWrapper"><button id="loadButton">Begin</button></div>
+    <div id="flashloadWrapper"><div id="flashWrapper"> <div id="s3logo"> <img src="https://files.readme.io/JCBDctZjTKqrHQw6zPyc_scality-s3-server-logo.png" width="400" height="200"
+    alt="S3 Server Logo"></div>
+        <h1 class="s3Title">Getting Started with your S3 Server</h1>
+
+    <p id="explain">An interactive GUI for beginners to familiarize themselves with S3 Servers</p>
+	<button id="openAppButton">Open the GUI</button>
+    </div>
+	</div>
+	<div id="appWrapper">
+    <div id="wrapper">
+
+    <div id="mainScreen">
+
+    <header id="mainHeadder">
+    S3 Server
+    </header>
+    <div id="makeBucket">
+        <input type="text" name="postcode" id="createField"/><button id="createBucket">Create Bucket</button>
+
+        <button id="listBucketButton">List Buckets</button>
+    </div>
+    <table id="buckets">
+
+    </table>
+    <div id="filesAndDropper">
+    <div id="files">
+
+    </div>
+    <div id="holder">Drag file here</div>
+    </div>
+
+	</div>
+  <script src="app.js"></script>
+</body>
 </html>
